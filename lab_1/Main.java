@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+/*
+ * Requests a number from the user. 
+ * Finds a given number of Fibonacci lines and then checks which ones are triangular. 
+ * Displays triangles on the screen.
+ */
     public static void main(String[] args){
         System.out.print("Enter Fibonacci count:");
         Scanner scanner = new Scanner(System.in);
