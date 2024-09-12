@@ -1,59 +1,63 @@
 package lab_1;
-import java.util.ArrayList;
+
 
 public class Fibonachi {
-    public ArrayList<Long> fibonachi = new ArrayList<>();
-    private int M;
-    /*
-     * The Fibonacci class immediately searches
-     * for Fibonacci numbers upon initialization
-     */
-    public Fibonachi(int M){
-        this.M = M;
-        fibonachi.add(1l);
-        fibonachi.add(1l);
-        this.calculateFibonachi(M);
-    }
-
-    public long calculateFibonachi(int n){
-        if (fibonachi.size() >= n) {
-            return fibonachi.get(n - 1);
-        }
-
-        for (int i = fibonachi.size(); i < n; i++) {
-            long nextFib = fibonachi.get(i - 1) + fibonachi.get(i - 2);
-            fibonachi.add(nextFib);
-        }
-        return fibonachi.get(n - 1);
-    }
+    private int index;
+    private long value;
+    private boolean isTriangular;
 
     /*
-     * checks whether a number is triangular
-     * @return is number Triangular
+     * Constructor initializes the Fibonacci index
      */
-    public boolean isTriangular(long number) {
+    public Fibonachi(int index){
+        this.index = index;
+    }
+
+
+    /*
+     * Checks whether a number is triangular.
+     * @return is number triangular.
+     */
+    public void cheakTriangular() {
         long n = 1;
         long triangular = n * (n + 1) / 2;
-        while (triangular < number) {
+        while (triangular < this.value) {
             n++;
             triangular = n * (n + 1) / 2;
         }
-        return triangular == number;
+        this.isTriangular = (triangular == this.value);
+    }
+    /*
+     * Geter for value
+     */
+    public long getValue(){
+        return this.value;
+    }
+    /*
+     * Geter for isTriangular
+     */
+    public boolean getIsTriangular(){
+        return this.isTriangular;
     }
 
     /*
-     * finding a triangular number
-     * @return array of triangular number
+     * Geter for index
      */
-    public ArrayList<Long> findTriangularFibonachiNumbers() {
-        ArrayList<Long> triangularFibonachis = new ArrayList<>();
-        for (int i = 1; i <= M; i++) {
-            long fibNumber = calculateFibonachi(i);
-            if (isTriangular(fibNumber)) {
-                triangularFibonachis.add(fibNumber);
-            }
-        }
-        return triangularFibonachis;
+    public int getIndex() {
+        return index;
     }
-    
+    /*
+     * Seter for value
+     */
+    public void setValue(Long value){
+        this.value = value;
+    }
+
+    /*
+     * Seter for isTriangular
+     */
+    public void setIsTriangular(boolean isTriangular){
+        this.isTriangular = isTriangular;
+    }
 }
+
