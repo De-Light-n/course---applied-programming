@@ -28,7 +28,7 @@ public class Logger {
     }
 
     public void writeLog(String log) {
-        try{
+        try {
             writer.write(log);
             writer.write("\n");
             System.out.println(log);
@@ -53,11 +53,9 @@ public class Logger {
                 Thread.sleep(200);
                 System.out.println(line);
             }
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             System.err.println("Потiк був перерваний.");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("Помилка читання з файлу: " + e.getMessage());
         }
     }

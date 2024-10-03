@@ -1,21 +1,20 @@
 package lab_1;
 
-
-public class Fibonachi {
+public class Fibonacci {
     private int index;
     private long value;
     private boolean isTriangular;
 
-    /*
+    /**
      * Constructor initializes the Fibonacci index
      */
-    public Fibonachi(int index){
+    public Fibonacci(int index) {
         this.index = index;
     }
 
-
-    /*
+    /**
      * Checks whether a number is triangular.
+     * 
      * @return is number triangular.
      */
     public void cheakTriangular() {
@@ -27,37 +26,39 @@ public class Fibonachi {
         }
         this.isTriangular = (triangular == this.value);
     }
-    /*
-     * Geter for value
+
+    /**
+     * Getter for value
      */
-    public long getValue(){
+    public long getValue() {
         return this.value;
     }
-    /*
-     * Geter for isTriangular
+
+    /**
+     * Getter for isTriangular
      */
-    public boolean getIsTriangular(){
+    public boolean getIsTriangular() {
         return this.isTriangular;
     }
 
-    /*
-     * Geter for index
+    /**
+     * Getter for index
      */
     public int getIndex() {
         return index;
     }
-    /*
-     * Seter for value
+
+    /**
+     * Setter for value
      */
-    public void setValue(Long value){
+    public void setValue(Long value) {
         this.value = value;
     }
 
-    /*
-     * Seter for isTriangular
+    /**
+     * Setter for isTriangular
      */
-    public void setIsTriangular(boolean isTriangular){
+    public void setIsTriangular(boolean isTriangular) {
         this.isTriangular = isTriangular;
     }
 }
-

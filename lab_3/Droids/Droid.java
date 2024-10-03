@@ -1,7 +1,6 @@
 package lab_3.Droids;
 
 import java.util.Random;
-
 import lab_3.Logger;
 
 public abstract class Droid {
@@ -10,10 +9,12 @@ public abstract class Droid {
     protected int damage;
     protected int accuracy;
 
-    protected int standart_health;
-    protected int standart_damage;
-    protected int standart_accuracy;
-    protected int standart_dodge_chance;
+    private int end_health;
+
+    protected int standard_health;
+    protected int standard_damage;
+    protected int standard_accuracy;
+    protected int standard_dodge_chance;
 
     protected int points_in_health;
     protected int points_in_damage;
@@ -29,37 +30,39 @@ public abstract class Droid {
 
     protected Logger logger = null;
 
-    public Droid(String name, int standart_health, int standart_damage, int standart_accuracy,
-                 int standart_power_recharge, int standart_dodge_chance,
-                 int points_in_health, int points_in_damage, int points_in_accuracy) {
+    public Droid(String name, int standard_health, int standard_damage, int standard_accuracy,
+            int standard_power_recharge, int standard_dodge_chance,
+            int points_in_health, int points_in_damage, int points_in_accuracy) {
         this.name = name;
-        this.standart_health = standart_health;
-        this.standart_damage = standart_damage;
-        this.standart_accuracy = standart_accuracy;
-        this.power_recharge = standart_power_recharge;
-        this.standart_dodge_chance = standart_dodge_chance;
+        this.standard_health = standard_health;
+        this.standard_damage = standard_damage;
+        this.standard_accuracy = standard_accuracy;
+        this.power_recharge = standard_power_recharge;
+        this.standard_dodge_chance = standard_dodge_chance;
 
-        this.health = this.standart_health + this.health_per_point * points_in_health;
-        this.damage = this.standart_damage + this.damage_per_point * points_in_damage;
-        this.accuracy = this.standart_accuracy + this.accuracy_per_point * points_in_accuracy;
+        this.health = this.standard_health + this.health_per_point * points_in_health;
+        this.damage = this.standard_damage + this.damage_per_point * points_in_damage;
+        this.accuracy = this.standard_accuracy + this.accuracy_per_point * points_in_accuracy;
+
+        this.end_health = this.health;
 
         this.logger = Logger.getInstance("lab_3/last_battle.txt");
     }
 
-    public boolean attack(Droid target) {
+    public boolean makeMove(Droid target) {
         Random random = new Random();
         int chance = random.nextInt(100);
         logger.writeLog("--------------------------------------");
-        if (this.stunned > 0){
+        if (this.stunned > 0) {
             logger.writeLog(this.name + " оглушений");
             this.stunned -= 1;
             return false;
-        }else if (chance <= this.accuracy) {
+        } else if (chance <= this.accuracy) {
             logger.writeLog(this.name + " успiшно атакував " + target.name);
-            target.takeDamage(this.damage);
-            if (this.powerUp(target)){
+            this.attack(target);
+            if (this.powerUp(target)) {
                 this.power_chance = 5;
-            }else{
+            } else {
                 this.power_chance += this.power_recharge;
             }
             return true;
@@ -69,12 +72,16 @@ public abstract class Droid {
         }
     }
 
+    public void attack(Droid target) {
+        target.takeDamage(this.damage);
+    }
+
     public abstract boolean powerUp(Droid target);
 
     public boolean takeDamage(int damage_in) {
         Random random = new Random();
         int chance = random.nextInt(100);
-        if (chance >= this.standart_dodge_chance) {
+        if (chance >= this.standard_dodge_chance) {
             this.health -= damage_in;
             logger.writeLog(this.name + " -" + damage_in + " health");
             return true;
@@ -84,11 +91,11 @@ public abstract class Droid {
         }
     }
 
-    public boolean isAlive(){
+    public boolean isAlive() {
         return this.health > 0;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
@@ -105,6 +112,14 @@ public abstract class Droid {
     }
 
     public Object getDodgeChance() {
-        return this.standart_dodge_chance;
+        return this.standard_dodge_chance;
+    }
+
+    public Object getStunned() {
+        return this.stunned;
+    }
+
+    public void revive() {
+        this.health = this.end_health;
     }
 }

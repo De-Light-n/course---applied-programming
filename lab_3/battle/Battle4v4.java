@@ -7,23 +7,29 @@ import lab_3.Logger;
 import lab_3.Droids.Droid;
 
 public class Battle4v4 {
-    public Battle4v4(ArrayList<Droid> team1, ArrayList<Droid> team2) {
-        Random random = new Random();
-        Logger logger = Logger.getInstance("lab_3/last_battle.txt");
+    private Logger logger;
+    private Random random;
+
+    public Battle4v4() {
+        this.random = new Random();
+        this.logger = Logger.getInstance("lab_3/last_battle.txt");
+    }
+
+    public void start(ArrayList<Droid> team1, ArrayList<Droid> team2) {
         logger.clearLog();
-        
+
         logger.writeLog("Починається командна битва 4 на 4!");
-        try{
+        try {
             Thread.sleep(500);
             logger.writeLog("\nВ правому кутку арени:");
             Thread.sleep(500);
-            for(Droid droid : team1){
+            for (Droid droid : team1) {
                 logger.writeLog(droid.getName());
                 Thread.sleep(250);
             }
             logger.writeLog("\nВ лiвому кутку арени:");
             Thread.sleep(500);
-            for(Droid droid : team2){
+            for (Droid droid : team2) {
                 logger.writeLog(droid.getName());
                 Thread.sleep(250);
             }
@@ -38,9 +44,9 @@ public class Battle4v4 {
                     Droid target2 = getRandomAliveDroid(team2, random);
                     if (target2 != null) {
                         Thread.sleep(500);
-                        attacker1.attack(target2);
-                        if(!target2.isAlive()){
-                            logger.writeLog(attacker1.getName()+" добив "+ target2.getName());
+                        attacker1.makeMove(target2);
+                        if (!target2.isAlive()) {
+                            logger.writeLog(attacker1.getName() + " добив " + target2.getName());
                         }
                     }
                 }
@@ -58,9 +64,9 @@ public class Battle4v4 {
                     Droid target1 = getRandomAliveDroid(team1, random);
                     if (target1 != null) {
                         Thread.sleep(500);
-                        attacker2.attack(target1);
-                        if(!target1.isAlive()){
-                            logger.writeLog(attacker2.getName()+" добив "+ target1.getName());
+                        attacker2.makeMove(target1);
+                        if (!target1.isAlive()) {
+                            logger.writeLog(attacker2.getName() + " добив " + target1.getName());
                         }
                     }
                 }
@@ -78,10 +84,10 @@ public class Battle4v4 {
             }
         }
 
-
         catch (InterruptedException e) {
             System.err.println("Потiк був перерваний.");
         }
+        this.reviveTems(team1, team2);
     }
 
     // Метод для перевiрки, чи є живi дроїди в командi
@@ -105,5 +111,13 @@ public class Battle4v4 {
         }
         return target;
     }
-}
 
+    private void reviveTems(ArrayList<Droid> team1, ArrayList<Droid> team2) {
+        for (Droid droid : team1) {
+            droid.revive();
+        }
+        for (Droid droid : team2) {
+            droid.revive();
+        }
+    }
+}

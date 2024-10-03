@@ -9,25 +9,25 @@ import lab_3.battle.*;
 
 public class Menu {
 
-    private ArrayList<Droid> droidList;  // Список створених дроїдiв
-    private Logger logger;               // Екземпляр класу logger
-    private Scanner scanner;             // Сканер для введення даних
+    private ArrayList<Droid> droidList; // Список створених дроїдiв
+    private Logger logger; // Екземпляр класу logger
+    private Scanner scanner; // Сканер для введення даних
 
     public Menu() {
-        this.droidList = new ArrayList<>();  // iнiцiалiзацiя списку дроїдiв
-        this.logger = Logger.getInstance("lab_3/last_battle.txt");  // Отримуємо logger
-        this.scanner = new Scanner(System.in);  // iнiцiалiзацiя Scanner
+        this.droidList = new ArrayList<>(); // iнiцiалiзацiя списку дроїдiв
+        this.logger = Logger.getInstance("lab_3/last_battle.txt"); // Отримуємо logger
+        this.scanner = new Scanner(System.in); // iнiцiалiзацiя Scanner
 
         // Базовi дроїди
         droidList.add(new TankDroid("Гора", 3, 0, 2));
         droidList.add(new WarriorDroid("Берсерк", 4, 0, 1));
-        droidList.add(new AssasinDroid("Блеск", 0, 5, 0));
+        droidList.add(new AssassinDroid("Блеск", 0, 5, 0));
         droidList.add(new TankDroid("Амбал", 1, 0, 4));
         droidList.add(new WarriorDroid("Ракутан", 1, 1, 3));
-        droidList.add(new AssasinDroid("UX-95", 0, 3, 3));
+        droidList.add(new AssassinDroid("UX-95", 0, 3, 3));
         droidList.add(new TankDroid("камаз", 0, 5, 0));
         droidList.add(new WarriorDroid("Майк", 2, 2, 1));
-        droidList.add(new AssasinDroid("Мухамед", 2, 2, 1));
+        droidList.add(new AssassinDroid("Мухамед", 2, 2, 1));
     }
 
     // Головне меню
@@ -84,8 +84,8 @@ public class Menu {
         int damagePoints = 0;
         int accuracyPoints = 0;
         System.out.println("Розпердiлiть 5 очок:");
-        
-        while(total_points!=5){
+
+        while (total_points != 5) {
             total_points = 0;
             System.out.print("Введiть кiлькiсть очок в здоров'я: ");
             healthPoints = scanner.nextInt();
@@ -97,7 +97,7 @@ public class Menu {
             accuracyPoints = scanner.nextInt();
 
             total_points = healthPoints + damagePoints + accuracyPoints;
-            if (total_points!=5){
+            if (total_points != 5) {
                 System.out.println("Неправильне розподiлення очок");
             }
         }
@@ -111,8 +111,8 @@ public class Menu {
                 newDroid = new WarriorDroid(name, healthPoints, damagePoints, accuracyPoints);
                 break;
             case 3:
-                newDroid = new AssasinDroid(name, healthPoints, damagePoints, accuracyPoints);
-                break;    
+                newDroid = new AssassinDroid(name, healthPoints, damagePoints, accuracyPoints);
+                break;
             default:
                 System.out.println("Неправильний вибiр.");
                 return;
@@ -127,12 +127,13 @@ public class Menu {
         if (droidList.isEmpty()) {
             System.out.println("Немає створених дроїдiв.");
         } else {
-             // Заголовок таблицi
-            System.out.printf("%-5s | %-15s | %-10s | %-10s | %-10s | %-10s | %-10s%n", "Номер", "iм'я", 
-                                    "HP", "Damage", "Accuracy", "Dodge", "Type");
+            // Заголовок таблицi
+            System.out.printf("%-5s | %-15s | %-10s | %-10s | %-10s | %-10s | %-10s%n", "Номер", "iм'я",
+                    "HP", "Damage", "Accuracy", "Dodge", "Type");
 
             // Роздiльник
-            System.out.println("----------------------------------------------------------------------------------------------------");
+            System.out.println(
+                    "----------------------------------------------------------------------------------------------------");
             int i = 1;
             // Виведення дроїдiв
             for (Droid droid : droidList) {
@@ -144,7 +145,8 @@ public class Menu {
                         droid.getAccuracy(),
                         droid.getDodgeChance(),
                         droid.getClass().getSimpleName()); // Тип дроїда
-                System.out.println("----------------------------------------------------------------------------------------------------");
+                System.out.println(
+                        "----------------------------------------------------------------------------------------------------");
             }
         }
     }
@@ -170,7 +172,8 @@ public class Menu {
 
         Droid droid1 = droidList.get(firstIndex);
         Droid droid2 = droidList.get(secondIndex);
-        new Battle1v1(droid1, droid2);
+        Battle1v1 bat = new Battle1v1();
+        bat.start(droid1, droid2);
     }
 
     private void startTeamBattle() {
@@ -188,7 +191,7 @@ public class Menu {
 
             while (true) {
                 index = getValidDroidIndex("Введiть номер дроїда для команди 1: ", droidList.size()) - 1;
-                if (team1.contains(droidList.get(index)) || team2.contains(droidList.get(index))){
+                if (team1.contains(droidList.get(index)) || team2.contains(droidList.get(index))) {
                     System.out.println("Дроїд вже знаходиться в однiй з команд");
                 } else {
                     break;
@@ -203,7 +206,7 @@ public class Menu {
             int index;
             while (true) {
                 index = getValidDroidIndex("Введiть номер дроїда для команди 2: ", droidList.size()) - 1;
-                if (team1.contains(droidList.get(index)) || team2.contains(droidList.get(index))){
+                if (team1.contains(droidList.get(index)) || team2.contains(droidList.get(index))) {
                     System.out.println("Дроїд вже знаходиться в однiй з команд");
                 } else {
                     break;
@@ -213,7 +216,8 @@ public class Menu {
             team2.add(droidList.get(index));
         }
 
-        new Battle4v4(team1, team2);
+        Battle4v4 bat = new Battle4v4();
+        bat.start(team1, team2);
     }
 
     // Метод для вiдтворення бою з файлу
@@ -230,7 +234,7 @@ public class Menu {
                 return value;
             } catch (InputMismatchException e) {
                 System.out.println("Неправильний ввiд! Введiть цiле число.");
-                scanner.next();  // Очистити введений неправильний ввiд
+                scanner.next(); // Очистити введений неправильний ввiд
             }
         }
     }
@@ -247,4 +251,3 @@ public class Menu {
         }
     }
 }
-
