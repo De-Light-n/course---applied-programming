@@ -1,6 +1,9 @@
 package lab_3.Droids;
 
-import java.util.Random;
+import java.util.ArrayList;
+
+import lab_3.effects.Effect;
+import lab_3.effects.Stunn;
 
 public class WarriorDroid extends Droid {
     public WarriorDroid(String name, int points_in_health, int points_in_damage, int points_in_accuracy) {
@@ -10,15 +13,10 @@ public class WarriorDroid extends Droid {
                 points_in_health, points_in_damage, points_in_accuracy);
     }
 
-    public boolean powerUp(Droid target) {
-        Random random = new Random();
-        int chance = random.nextInt(100);
-        if (chance <= this.power_chance) {
-            logger.writeLog(this.getName() + " оглушає " + target.getName());
-            target.stunned = 3;
-            return true;
-        } else {
-            return false;
-        }
+    public ArrayList<Effect> powerUp() {
+        ArrayList<Effect> return_effects = new ArrayList<>();
+        logger.writeLog(this.getColoredName() + " застосовує оглушення");
+        return_effects.add(new Stunn(3, 0));
+        return return_effects;
     }
 }

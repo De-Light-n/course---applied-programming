@@ -1,6 +1,9 @@
 package lab_3.Droids;
 
-import java.util.Random;
+import java.util.ArrayList;
+
+import lab_3.effects.Damage;
+import lab_3.effects.Effect;
 
 public class TankDroid extends Droid {
 
@@ -12,16 +15,12 @@ public class TankDroid extends Droid {
                 points_in_health, points_in_damage, points_in_accuracy);
     }
 
-    public boolean powerUp(Droid target) {
-        Random random = new Random();
-        int chance = random.nextInt(100);
-        if (chance <= this.power_chance) {
-            this.health += 700;
-            this.damage += 50;
-            logger.writeLog(this.getName() + " усиляється");
-            return true;
-        } else {
-            return false;
-        }
+    public ArrayList<Effect> powerUp() {
+        ArrayList<Effect> return_effects = new ArrayList<>();
+        this.health += 700;
+        this.damage += 50;
+        logger.writeLog(this.getColoredName() + " усиляється");
+        return_effects.add(new Damage(1, 0));
+        return return_effects;
     }
 }

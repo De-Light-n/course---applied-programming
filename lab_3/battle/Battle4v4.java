@@ -24,13 +24,15 @@ public class Battle4v4 {
             logger.writeLog("\nВ правому кутку арени:");
             Thread.sleep(500);
             for (Droid droid : team1) {
-                logger.writeLog(droid.getName());
+                droid.setColor(1);
+                logger.writeLog(droid.getColoredName());
                 Thread.sleep(250);
             }
             logger.writeLog("\nВ лiвому кутку арени:");
             Thread.sleep(500);
             for (Droid droid : team2) {
-                logger.writeLog(droid.getName());
+                droid.setColor(2);
+                logger.writeLog(droid.getColoredName());
                 Thread.sleep(250);
             }
             logger.writeLog(" ");
@@ -44,9 +46,9 @@ public class Battle4v4 {
                     Droid target2 = getRandomAliveDroid(team2, random);
                     if (target2 != null) {
                         Thread.sleep(500);
-                        attacker1.makeMove(target2);
+                        target2.takeDamage(attacker1.attack());
                         if (!target2.isAlive()) {
-                            logger.writeLog(attacker1.getName() + " добив " + target2.getName());
+                            logger.writeLog(attacker1.getColoredName() + " добив " + target2.getColoredName());
                         }
                     }
                 }
@@ -64,9 +66,9 @@ public class Battle4v4 {
                     Droid target1 = getRandomAliveDroid(team1, random);
                     if (target1 != null) {
                         Thread.sleep(500);
-                        attacker2.makeMove(target1);
+                        target1.takeDamage(attacker2.attack());
                         if (!target1.isAlive()) {
-                            logger.writeLog(attacker2.getName() + " добив " + target1.getName());
+                            logger.writeLog(attacker2.getColoredName() + " добив " + target1.getColoredName());
                         }
                     }
                 }
@@ -81,6 +83,12 @@ public class Battle4v4 {
                 // Чергування iндексiв дроїдiв
                 team1Index = (team1Index + 1) % team1.size();
                 team2Index = (team2Index + 1) % team2.size();
+            }
+            for(Droid droid:team1){
+                droid.setColor(0);
+            }
+            for(Droid droid:team2){
+                droid.setColor(0);
             }
         }
 

@@ -12,29 +12,31 @@ public class Battle1v1 {
 
     public void start(Droid droid1, Droid droid2) {
         logger.clearLog();
-        logger.writeLog("Починається битва мiж " + droid1.getName() + " та " + droid2.getName() + "!");
+        droid1.setColor(1);
+        droid2.setColor(2);
+        logger.writeLog("Починається битва мiж " + droid1.getColoredName() + " та " + droid2.getColoredName() + "!");
         try {
             Thread.sleep(500);
 
             while (droid1.isAlive() && droid2.isAlive()) {
                 // Перший дроїд атакує
                 Thread.sleep(500);
-                droid1.makeMove(droid2);
+                droid2.takeDamage(droid1.attack());
                 if (!droid2.isAlive()) {
-                    logger.writeLog(droid2.getName() + " був знищений!");
+                    logger.writeLog(droid2.getColoredName() + " був знищений!");
                     Thread.sleep(250);
-                    logger.writeLog(droid1.getName() + " перемiг у битвi!");
+                    logger.writeLog(droid1.getColoredName() + " перемiг у битвi!");
                     logger.close();
                     break;
                 }
 
                 // Другий дроїд атакує, якщо вiн ще живий
                 Thread.sleep(500);
-                droid2.makeMove(droid1);
+                droid1.takeDamage(droid2.attack());
                 if (!droid1.isAlive()) {
-                    logger.writeLog(droid1.getName() + " був знищений!");
+                    logger.writeLog(droid1.getColoredName() + " був знищений!");
                     Thread.sleep(250);
-                    logger.writeLog(droid2.getName() + " перемiг у битвi!");
+                    logger.writeLog(droid2.getColoredName() + " перемiг у битвi!");
                     logger.close();
                     break;
                 }
@@ -42,6 +44,8 @@ public class Battle1v1 {
         } catch (InterruptedException e) {
             System.err.println("Потiк був перерваний.");
         }
+        droid1.setColor(0);
+        droid2.setColor(0);
         droid1.revive();
         droid2.revive();
     }
